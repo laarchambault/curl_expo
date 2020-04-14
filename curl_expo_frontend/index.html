@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--<script defer src="modal.js"></script>-->
-    <script defer src="products.js"></script>
-    <script defer src="users.js"></script>
-    <script defer src="index.js"></script>
+    <script defer src="src/view_or_review_products.js"></script>
+    <script defer src="src/users.js"></script>
+    <script defer src="src/new_product.js"></script>
+    <script defer src="src/html_elements.js"></script>
+    <script defer src="src/index.js"></script>
     <link rel="stylesheet" href="style.css">
     <!--<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Lato&display=swap" rel="stylesheet">-->
     <title>Curl Expo</title>
@@ -15,18 +17,22 @@
 <body>
     <main>
         <aside>
-            <h1>Curl Expo</h1>
+            <h1 id="logo">Curl Expo</h1>
             <h3 id="greeting">Welcome</h3>
             <h2>Account</h2>
             <ul id="actions-container" class="side-list">
-            <li class="item" id="sign-up-button" data-action="new"><!--id="make-bake-button"-->
+            <li class="item" id="sign-up-button"><!--id="make-bake-button"-->
                 Sign Up
             </li>
-            <li class="item" id="login-button" data-action="judge"><!--id="judge-bake-button"-->
+            <li class="item" id="login-button"><!--id="judge-bake-button"-->
                 Log In
             </li>
             </ul>
             <h2>Products</h2>
+            <li class="item" id="new-product-button">
+                Add New Product
+            </li>
+            <h2>View All Products</h2>
             <ul id="products-container" class="side-list">
             <!-- Add Products Here -->
             </ul>
@@ -34,11 +40,12 @@
         </aside>
         <section>
             <div id="detail">
-                <!--Main Display Window-->
-            </div>
-            <div id="new-user" style="display: none;" data-action="close">
+                <div id="productDetail"></div>
+
+            <div id="new-user" style="display: none;">
                 <form id="new-user-form">
                     <h1>Create New User</h1>
+                    <p> If you're new to Curl Expo, welcome! We're all about finding the right product for your hair type. Don't know your hair type? Take the quiz at <a href='https://www.naturallycurly.com/quiz' target='_blank'>NaturallyCurly</a>. They love your curls as much as we do, and they can help you get started.</p>
                     <label for="username">Username</label>
                     <input type="text" name="username">
                     <label for="email">Email</label>
@@ -58,7 +65,7 @@
                 </form>
             </div>
 
-            <div id="login" style="display: none;" data-action="close">
+            <div id="login" style="display: none;">
                 <form id="login-form">
                     <h1>Log In (Returning User)</h1>
                     <label for="username">Username</label>
@@ -70,8 +77,20 @@
                     <input type="submit" value="Log In">
                 </form>
             </div>
-                
-
+        </div>
+        <div id="new-product" style="display: none;">
+            <form id="new-product-form">
+                <h1>Add a New Curly Hair Care Product</h1>
+                <p> Can't find a Product in our System? Add it below!</p>
+                <label for="name">Product Name</label>
+                <input type="text" name="name">
+                <label for="brand">Brand</label>
+                <input type="text" name="brand">
+                <label for="image">Image URL (copy/paste the image address)</label>
+                <input type="text" name="image">
+                <input type="submit" value="Add Product">
+            </form>
+        </div>
 
         </section>
     </main>

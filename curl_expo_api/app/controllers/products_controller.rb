@@ -11,4 +11,13 @@ class ProductsController < ApplicationController
         render json: product, include: [:reviews, :users]
     end
 
+    def create 
+        product = Product.create
+        product.name = params[:name]
+        product.brand = params[:brand]
+        product.image = params[:image]
+        product.save
+        render json: product
+    end
+
 end

@@ -8,7 +8,8 @@ function stageReviewDiv() {
     allReviews.id = 'reviews';
     let header = document.createElement('h1')
     header.textContent = "Product Reviews"
-    allReviews.append(header)
+    allReviews.append(header, reviewFilter)
+    reviewFilter.addEventListener('click', (e) => reviewFilterCallback(e))
 }
 ////////////////////////////////////////////////
 //      products
@@ -26,12 +27,13 @@ function createProductLi(product) {
     li.textContent = product.name
     li.className = "item"
     li.dataset.id = product.id
-    li.addEventListener('click', e => displayProductDetails(e))
+    li.addEventListener('click', e => displayProductDetails(e.target))
     productSidebar.append(li)
+    return li
 }
 
-function displayProductDetails(e) {
-    let id = e.target.dataset.id
+function displayProductDetails(li) {
+    let id = li.dataset.id
     clearDetails()
     clearReviews()
     productFetch(id)
@@ -84,22 +86,63 @@ function produceReviewFormElements(productData) {
 
 ///////////////////////////////////////////////
 //         reviews
+
+
 function loadAllReviews(productId) {
     productFetch(productId)
     .then( productData => {
         clearReviews();
+        mainWindowContainer.append(allReviews)
         productData.reviews.forEach(review => {
-            mainWindowContainer.append(allReviews)
             addReview(productData, review)
         }
     )}
 )}
-//add "Reviews" h1 before all reviews and before new review
+
+function reviewFilterCallback(e) {
+    if (e.target.nodeName === 'P') {
+        let currentReviews = allReviews.querySelectorAll('ul')
+        if (currentReviews.length > 0) {
+            if (e.target.innerText === 'All') {
+                currentReviews.forEach( review => {
+                    //if "All" all display: block
+                    review.style.display = "block"
+                })
+            } else {
+                currentReviews.forEach( review => {
+                    if (review.dataset.userHairType === e.target.innerText) {
+                        review.style.display = "block"
+                    } else {
+                        review.style.display = "none"
+                    }
+                })
+            }
+        }
+
+        //else if dataset.hair_type === p.value, display: block
+        //else display: none
+    }
+}
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+            }
+        }
+        }
+    }
+
 function addReview(productData, review) {
     let ul = document.createElement('ul')
-    let header = document.createElement('h3')
     let user = productData.users.find( user => (user.id === review.user_id))
-    header.textContent = `${user.username} says:`
+    ul.dataset.userHairType = user.hair_type
+    let header = document.createElement('h3')
+    header.textContent = `${user.username} (${user.hair_type}) says:`
     let score = document.createElement('li')
     score.textContent = `${review.score} out of 10`
     let content = document.createElement('li')
@@ -110,8 +153,9 @@ function addReview(productData, review) {
 
 function addNewReview(user, review) {
     let ul = document.createElement('ul')
+    ul.dataset.userHairType = user.hair_type
     let header = document.createElement('h3')
-    header.textContent = `${user.username} says:`
+    header.textContent = `${user.username} (${user.hair_type}) says:`
     let score = document.createElement('li')
     score.textContent = `${review.score} out of 10`
     let content = document.createElement('li')

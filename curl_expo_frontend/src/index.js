@@ -1,17 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    clearDetails()
-    signUpButton.addEventListener('click', signUpButtonCallback())
+    displayWelcome()
+    logo.addEventListener('click', () => displayWelcome())
+    signUpButton.addEventListener('click', () => signUpButtonCallback())
     signUpForm.addEventListener('submit', e => signUpFormCallback(e))
-    loginButton.addEventListener('click', loginButtonCallback())
+    loginButton.addEventListener('click', () => loginButtonCallback())
     loginForm.addEventListener('submit', e => loginCallback(e))
+    newProductButton.addEventListener('click', () => newProductCallback())
+    newProductForm.addEventListener('submit', e => productFormCallback(e))
     
     renderProductsSidebar()
-    
-    ////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////
-    //////////////         PICK UP HERE
-    //addEventListeners to #sign-up-button and #login-button
+    window.addEventListener('click', e => console.log(e.target))
     
 
     //show sidebar and menu options. Default "About" with login/sign up buttons
@@ -31,14 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 ///////////////////////////////////////////////
 //         selectors and global vars
 const baseURL = "http://localhost:3000"
-const mainWindowContainer = document.querySelector('#detail')
-
-
-
-
-
-
-
+const mainWindowContainer = document.querySelector('#productDetail')
+const logo = document.querySelector('#logo')
 
 
 
@@ -46,18 +38,29 @@ const mainWindowContainer = document.querySelector('#detail')
 
 ////////////////////////////////////////////////
 //         render methods
+function displayWelcome() {
+    clearDetails();
+    mainWindowContainer.appendChild(welcomeText)
+}
+
 function clearDetails() {
-    mainWindowContainer.innerHTML = ""
+    clearChildren(mainWindowContainer)
     clearSignUp()
     clearLogin()
+    clearProductForm()
+}
+function clearChildren(node) {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
 }
 
 function clearSidebar() {
-    productSidebar.innerHTML = ""
+    clearChildren(productSidebar)
 }
 
 function clearReviews() {
-    allReviews.innerHTML = ""
+    clearChildren(allReviews)
     stageReviewDiv()
 }
 
@@ -69,17 +72,27 @@ function clearLogin() {
     loginDiv.style.display = "none";
 }
 
+function clearProductForm() {
+    newProductDiv.style.display = "none";
+}
+
 function renderSignUp() {
     signUpDiv.style.display = "block";
 }
 
 function renderLogin() {
-    loginDiv.style.Display = "block";
+    loginDiv.style.display = "block";
+}
+
+function renderProductForm() {
+    newProductDiv.style.display = "block"
 }
 
 
 function greetUser() {
     document.querySelector('#greeting').textContent = `Welcome ${currentUser.username}`
+    clearDetails();
+    mainWindowContainer.appendChild(landing)
 }
 
 

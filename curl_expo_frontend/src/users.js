@@ -2,7 +2,7 @@ let currentUser = {};
 const signUpButton = document.querySelector('#sign-up-button')
 const signUpDiv = document.querySelector('#new-user')
 const signUpForm = document.querySelector('#new-user-form')
-const loginButton = document.querySelector('#sign-up-button')
+const loginButton = document.querySelector('#login-button')
 const loginDiv = document.querySelector('#login')
 const loginForm = document.querySelector('#login-form')
 
@@ -32,8 +32,8 @@ function signUpFormCallback(e) {
 }
 
 function loginButtonCallback() {
-    clearDetails()
-    renderLogin()
+    clearDetails();
+    renderLogin();
 }
 
 function loginCallback(e) {
