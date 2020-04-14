@@ -1,0 +1,25 @@
+User Stories:
+1. User can create an account, log in, edit profile, and delete account
+Users will share hair type as part of their profile
+2. User can create a product or browse existing products
+3. User can review products.
+4. User can edit or delete own reviews.
+5. User can view reviews with each products
+
+
+Stretch User Stories:
+1. User can filter product reviews by hair type of reviewer
+2. User can add ingredients to products
+3. Users can save products: "My Product" and "Product I want"
+4. Users can view their own saved products and reviews
+5. Users can add tags to products
+
+Extra Super Stretch
+1. Users can sort products by score, by scores within a hair type, by ingredients, by tags, etc
+
+
+CRUD summary
+Create: user, Product, Review, tags, ingredients, saves
+Read: User Profile, products, reviews, saves, tags, ingredients
+Update: User Profile, reviews,
+Delete: ProductTag (not tags), ProductIngredients (not ingredients), reviews, saves, user

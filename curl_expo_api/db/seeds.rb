@@ -1,0 +1,27 @@
+
+
+User.create(username: "Merida", email: "bowchamp@girl.com", password: "merida", hair_type: "3C", hair_width: "Coarse", hair_porosity: "High", hair_density: "Medium")
+User.create(username: "Tiana", email: "frog@princess.com", password: "tiana", hair_type: "4B", hair_width: "Coarse", hair_porosity: "Low", hair_density: "High")
+User.create(username: "Peach", email: "castle@princess.com", password: "peach", hair_type: "2A", hair_width: "Fine", hair_porosity: "Medium", hair_density: "Low")
+
+Product.create(name: "Sleek & Shine Intensely Smooth Leave-In Conditioning Cream", brand: "Garnier Fructis", image: "https://www.garnierusa.com/-/media/project/loreal/brand-sites/garnier/usa/us/pdp_images/fructis/sleek---shine/sleek---shine-intensely-smooth-leave-in-conditioning-cream/fructis_sleek_shine_intensely_smooth_leave_in_conditioning_cream_front_v1.jpg")
+Product.create(name: "Pure Aloe Vera Shampoo with Lavender Fragrance", brand: "CurlMix", image: "https://cdn.shopify.com/s/files/1/1403/1303/products/10161_080_Amazon_3000x.jpg?v=1565414524")
+Product.create(name: "Pure Grape Seed Conditioner With Ultra Slip And Lavender Fragrance", brand: "CurlMix", image: "https://cdn.shopify.com/s/files/1/1403/1303/products/10161_093_Amazon_3000x.jpg?v=1565414900")
+Product.create(name: "Pure Avocado Moisturizer With Organic Jojoba Oil For Moisturizing Hair & Lavender Fragrance", brand: "CurlMix", image: "https://cdn.shopify.com/s/files/1/1403/1303/products/10161_053_Amazon_3000x.jpg?v=1565415120")
+Product.create(name: "Pure Flaxseed Gel with Organic Jojoba Oil for Moisturizing Hair & Lavender Fragrance", brand: "CurlMix", image: "https://cdn.shopify.com/s/files/1/1403/1303/products/10161_046_Amazon_3000x.jpg?v=1565415158")
+Product.create(name: "Pure Regrowth Serum With Organic Jojoba Oil For Moisturizing & Lavender Fragrance", brand: "CurlMix", image: "https://cdn.shopify.com/s/files/1/1403/1303/products/10161_122_Tif_Amazon_3000x.jpg?v=1565414764")
+Product.create(name: "Sulfate-free Shampoo", brand: "LoveUrSelf", image: "https://cdn.shopify.com/s/files/1/1570/4325/products/LUS_Shampoo_HR_c5245873-e3e0-4f60-9a58-01fbb8886e70_1024x1024.jpg?v=1562901579")
+Product.create(name: "Silicone-free Conditioner", brand: "LoveUrSelf", image: "https://cdn.shopify.com/s/files/1/1570/4325/products/Group_Curly_Low_Res_503b047d-7d0f-43ef-ae7c-d7664e11b331.jpg?v=1562901622")
+Product.create(name: "All-in-One Repair Hydrate Style", brand: "LoveUrSelf", image: "https://cdn.shopify.com/s/files/1/1570/4325/products/Group_Curly_Low_Res_503b047d-7d0f-43ef-ae7c-d7664e11b331.jpg?v=1562901622")
+Product.create(name: "Curls So Fresh", brand: "Miss Jessie's Original", image: "https://cdn.shopify.com/s/files/1/0071/5787/4747/products/CSF.png?v=1558469410")
+Product.create(name: "Pillow Soft Curls", brand: "Miss Jessie's Original", image: "https://cdn.shopify.com/s/files/1/0071/5787/4747/products/PSC_1200x1200.png?v=1558470022")
+Product.create(name: "Coconut and Hibiscus Curl and Shine Shampoo", brand: "Shea Moisture", image: "https://images.ulta.com/is/image/Ulta/2271854?op_sharpen=1&resMode=bilin&qlt=85&wid=800&hei=800&fmt=jpg")
+Product.create(name: "Shea Miracle Leave-in Conditioner", brand: "African Pride", image: "https://images-na.ssl-images-amazon.com/images/I/51QC33iuLdL._SY450_.jpg")
+Product.create(name: "Light Creme Gel", brand: "Bounce Curl", image: "https://cdn.shopify.com/s/files/1/1006/4028/products/640_12_oz_front_1024x.png?v=1550077612")
+
+Review.create(product_id: Product.all.sample.id, user_id: User.all.sample.id, content: "Love this stuff", score: 9)
+Review.create(product_id: Product.all.sample.id, user_id: User.all.sample.id, content: "Wanted to like it, but it wasn't right for my hair", score: 3)
+Review.create(product_id: Product.all.sample.id, user_id: User.all.sample.id, content: "It's okay, but I think I'll stick to my regular stuff", score: 6)
+Review.create(product_id: Product.all.sample.id, user_id: User.all.sample.id, content: "This stuff is the absolute holy grail of curly hair!", score: 10)
+Review.create(product_id: Product.all.sample.id, user_id: User.all.sample.id, content: "I love it! I use it every day", score: 8)
+Review.create(product_id: Product.all.sample.id, user_id: User.all.sample.id, content: "Pretty good, but my hair loses definition after a long day", score: 7)

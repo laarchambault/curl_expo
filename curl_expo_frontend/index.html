@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--<script defer src="modal.js"></script>-->
+    <script defer src="products.js"></script>
+    <script defer src="users.js"></script>
+    <script defer src="index.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!--<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Lato&display=swap" rel="stylesheet">-->
+    <title>Curl Expo</title>
+</head>
+<body>
+    <main>
+        <aside>
+            <h1>Curl Expo</h1>
+            <h3 id="greeting">Welcome</h3>
+            <h2>Account</h2>
+            <ul id="actions-container" class="side-list">
+            <li class="item" id="sign-up-button" data-action="new"><!--id="make-bake-button"-->
+                Sign Up
+            </li>
+            <li class="item" id="login-button" data-action="judge"><!--id="judge-bake-button"-->
+                Log In
+            </li>
+            </ul>
+            <h2>Products</h2>
+            <ul id="products-container" class="side-list">
+            <!-- Add Products Here -->
+            </ul>
+
+        </aside>
+        <section>
+            <div id="detail">
+                <!--Main Display Window-->
+            </div>
+            <div id="new-user" style="display: none;" data-action="close">
+                <form id="new-user-form">
+                    <h1>Create New User</h1>
+                    <label for="username">Username</label>
+                    <input type="text" name="username">
+                    <label for="email">Email</label>
+                    <input type="text" name="email">
+                    <label for="password">Password</label>
+                    <input type="text" name="password">
+                    <p>Tell us about your hair!</p>
+                    <label for="hair_type">Hair Type</label>
+                    <input type="text" name="hair_type">
+                    <label for="hair_width">Hair Width</label>
+                    <input type="text" name="hair_width">
+                    <label for="hair_porosity">Porosity</label>
+                    <input type="text" name="hair_porosity">
+                    <label for="hair_density">Density</label>
+                    <input type="text" name="hair_density">
+                    <input type="submit" value="Create Account">
+                </form>
+            </div>
+
+            <div id="login" style="display: none;" data-action="close">
+                <form id="login-form">
+                    <h1>Log In (Returning User)</h1>
+                    <label for="username">Username</label>
+                    <input type="text" name="username">
+                    <label for="email">Email</label>
+                    <input type="text" name="email">
+                    <label for="password">Password</label>
+                    <input type="text" name="password">
+                    <input type="submit" value="Log In">
+                </form>
+            </div>
+                
+
+
+        </section>
+    </main>
+    
+</body>
+</html>
