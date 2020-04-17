@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     logoutYes.addEventListener('click', () => logoutYesCallback())
     logoutNo.addEventListener('click', () => logoutNoCallback())
     editUserForm.addEventListener('submit', e => editProfileFormCallback(e))
-    
+    editProductForm.addEventListener('submit', e => editProductCallback(e))
 
     renderProductsSidebar()
     window.addEventListener('click', e => console.log(e.target))
@@ -134,7 +134,8 @@ function renderProductForm() {
 
 function renderEditSection() {
     editDiv.style.display = "block";
-    loadDatalistIngredients()
+    loadDatalistIngredients();
+    addProductToEditForm(editProductForm.dataset.id);
 }
 
 

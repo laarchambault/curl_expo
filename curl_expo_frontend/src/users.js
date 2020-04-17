@@ -152,8 +152,8 @@ function editProfileFormCallback(e) {
         },
         body: JSON.stringify(editObj)
     })
-    .then (r => r.json())
-    .then (user => {
+    .then(r => r.json())
+    .then(user => {
         currentUser = user
         alert("Profile Updated!")
         greetUser()

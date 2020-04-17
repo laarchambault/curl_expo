@@ -20,4 +20,14 @@ class ProductsController < ApplicationController
         render json: product
     end
 
+    def update
+        product = Product.find(params[:id])
+        if product
+            product.update(name: params[:name], brand: params[:brand], image: params[:image])
+            render json: product
+        else
+            render json: {message: "Unable to update product"}
+        end
+    end
+
 end

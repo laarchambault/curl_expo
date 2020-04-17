@@ -33,6 +33,7 @@ function createProductLi(product) {
 
 function displayProductDetails(id) {
     clearDetails()
+    editProductForm.dataset.id = id
     newIngredientForm.dataset.id = id
     productDetail.dataset.id = id
     productDetail.style.display = "block"

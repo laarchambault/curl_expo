@@ -2,11 +2,22 @@ const editButton = document.querySelector('#edit-product-button')
 const editDiv = document.querySelector('#edit-product')
 const ingredientDatalist = document.querySelector('#ingredient-options')
 const newIngredientForm = document.querySelector('#new-ingredient')
+const editProductForm = document.querySelector('#edit-product-form')
 
 function editButtonCallback() {
-    clearDetails()
-    renderEditSection()
+    clearDetails();
+    renderEditSection();
 }
+
+function addProductToEditForm(id) {
+    productFetch(id)
+    .then(product => {
+        editProductForm.querySelector('#product-name').value = product.name
+        editProductForm.querySelector('#brand').value = product.brand
+        editProductForm.querySelector('#edit-image').value = product.image
+    })
+
+};
 
 function newIngredientCallback(e) {
     e.preventDefault()
@@ -43,3 +54,24 @@ function createDatalistOption(product) {
     ingredientDatalist.append(option)
 }
 
+function editProductCallback(e) {
+    e.preventDefault();
+    let t = e.target
+    let editObj = {
+        name: t.name.value,
+        brand: t.brand.value,
+        image: t.image.value,
+    }
+    fetch(`${baseURL}/products/${t.dataset.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editObj)
+    })
+    .then(r => r.json())
+    .then(product => {
+        alert("Product Updated!")
+        displayProductDetails(product.id)
+    })
+}

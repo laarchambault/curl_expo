@@ -110,6 +110,16 @@
                 </div>
                 
                 <div id="edit-product" style="display: none;" class="box">
+                    <form id="edit-product-form" autocomplete="off">
+                        <h1>Edit this Product</h1>
+                        <label for="name">Product Name</label>
+                        <input type="text" name="name" id="product-name">
+                        <label for="brand">Brand</label>
+                        <input type="text" name="brand" id="brand">
+                        <label for="image">Image URL (copy/paste the image address)</label>
+                        <input type="text" name="image" id="edit-image">
+                        <input type="submit" value="Edit Product">
+                    </form>
                     <h1>Add an Ingredient</h1>
                     <form id="new-ingredient" autocomplete="off">
                         <input list="ingredient-options" name="name">
