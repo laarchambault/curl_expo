@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
     def show
         product = Product.find(params[:id])
         #refactor for find_or_create_by
-        render json: product, include: [:reviews, :users]
+        render json: product, include: { ingredients: {}, :reviews => { include: :user}}
     end
 
     def create 

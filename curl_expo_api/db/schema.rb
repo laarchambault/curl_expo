@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_12_180951) do
+ActiveRecord::Schema.define(version: 2020_04_15_201611) do
+
+  create_table "favorites", force: :cascade do |t|
+    t.string "category"
+    t.integer "product_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_favorites_on_product_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "product_ingredients", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "ingredient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ingredient_id"], name: "index_product_ingredients_on_ingredient_id"
+    t.index ["product_id"], name: "index_product_ingredients_on_product_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
@@ -43,6 +68,10 @@ ActiveRecord::Schema.define(version: 2020_04_12_180951) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "favorites", "products"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "product_ingredients", "ingredients"
+  add_foreign_key "product_ingredients", "products"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
 end

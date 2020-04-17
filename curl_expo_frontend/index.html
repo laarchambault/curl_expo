@@ -7,28 +7,41 @@
     <!--<script defer src="modal.js"></script>-->
     <script defer src="src/view_or_review_products.js"></script>
     <script defer src="src/users.js"></script>
+    <script defer src="src/edit_product.js"></script>
     <script defer src="src/new_product.js"></script>
-    <script defer src="src/html_elements.js"></script>
+    <script defer src="src/favorites.js"></script>
     <script defer src="src/index.js"></script>
     <link rel="stylesheet" href="style.css">
-    <!--<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Lato&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Lato&display=swap" rel="stylesheet">
     <title>Curl Expo</title>
 </head>
 <body>
     <main>
         <aside>
-            <h1 id="logo">Curl Expo</h1>
-            <h3 id="greeting">Welcome</h3>
+            <img id="logo" src="src/EXPO.png" alt="Curl Expo Logo">
+            <h2 id="greeting">Welcome</h2>
             <h2>Account</h2>
             <ul id="actions-container" class="side-list">
-            <li class="item" id="sign-up-button"><!--id="make-bake-button"-->
+            <li class="item" id="sign-up-button">
                 Sign Up
             </li>
-            <li class="item" id="login-button"><!--id="judge-bake-button"-->
+            <li class="item" id="edit-profile-button" style="display: none;">
+                Edit Profile
+            </li>
+            <li class="item" id="login-button">
                 Log In
+            </li>
+            <li class="item" id="logout-button" style="display: none;">
+                Log Out
             </li>
             </ul>
             <h2>Products</h2>
+            <li class="item" id="view-to-try-btn">
+                View "To Try" List
+            </li>
+            <li class="item" id="view-favorites-btn">
+                View Your Favorites
+            </li>
             <li class="item" id="new-product-button">
                 Add New Product
             </li>
@@ -40,58 +53,153 @@
         </aside>
         <section>
             <div id="detail">
-                <div id="productDetail"></div>
+                <div id="welcome" style="display: none;" class="box">
+                    <h1>Welcome to Curl Expo</h1>
+                    <p>At Curl Expo, we're all about helping you find the right product for your natural curls.</p>
+                    <p>Since curls come in all types, from coily to wavy, even the best curl product may not be a match for you. And we're dedicated to helping you find the right product for your amazing curls.</p>
+                </div>
+                <div id="landing" style="display: none;" class="box">
+                    <h1>Welcome!</h1>
+                    <img alt='wink from girl with curly hair' src='src/curl_wink.png'>
+                    <h3>Nice curls ;)  </h3>
+                </div>
+                <div id="productDetail" style="display: none;" class="box">
+                    <div id="product-facts">
+                        <img id="prod-detail-img" src="" alt="">
+                        <h1 id="prod-header"></h1>
+                        <p class="description"></p>
+                        <h3>Ingredients</h3>
+                        <p class="description" id="ingred"></p>
+                    </div>
 
-            <div id="new-user" style="display: none;">
-                <form id="new-user-form">
-                    <h1>Create New User</h1>
-                    <p> If you're new to Curl Expo, welcome! We're all about finding the right product for your hair type. Don't know your hair type? Take the quiz at <a href='https://www.naturallycurly.com/quiz' target='_blank'>NaturallyCurly</a>. They love your curls as much as we do, and they can help you get started.</p>
-                    <label for="username">Username</label>
-                    <input type="text" name="username">
-                    <label for="email">Email</label>
-                    <input type="text" name="email">
-                    <label for="password">Password</label>
-                    <input type="text" name="password">
-                    <p>Tell us about your hair!</p>
-                    <label for="hair_type">Hair Type</label>
-                    <input type="text" name="hair_type">
-                    <label for="hair_width">Hair Width</label>
-                    <input type="text" name="hair_width">
-                    <label for="hair_porosity">Porosity</label>
-                    <input type="text" name="hair_porosity">
-                    <label for="hair_density">Density</label>
-                    <input type="text" name="hair_density">
-                    <input type="submit" value="Create Account">
-                </form>
+                    <button id="fav-btn" style="display: none;"> Favorite </button>
+                    <button id="to-try-btn" style="display: none;"> To Try </button>
+                    <button id="edit-product-button">Edit Product</button>
+                    <div id="new-review">
+                        <h2>Review This Product</h2>
+                        <form id="score-form" data-id="" style="display: none;" autocomplete="off">
+                            <label for="score">Rate:</label>
+                            <input type="number" name="score" id="score" min="0" max="10" step="0">
+                            <label for="content">How was this product?</label>
+                            <textarea name="content"></textarea>
+                            <input type="submit" value="Submit Review">
+                        </form>
+                        <h3 id="pls-sign-in">Sign in to leave a review</h3>
+                    </div>
+                    <div id="reviews">
+                        <h1>Product Reviews</h1>
+                        <div class="dropdown">
+                            <button class="dropbtn">Filter by Hair Type</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <!--remove ids below if not used-->
+                                <p id="wA">2A</p>
+                                <p id="wB">2B</p>
+                                <p id="wC">2C</p>
+                                <p id="cA">3A</p>
+                                <p id="cB">3B</p>
+                                <p id="cC">3C</p>
+                                <p id="coA">4A</p>
+                                <p id="coB">4B</p>
+                                <p id="coC">4C</p>
+                                <p id="all">All</p>
+                            </div>
+                        </div>
+                        <h2>Avg Rating: <span id="avg-score-disp"></span></h2>
+                        <div id="review-container"></div>
+                    </div>
+                </div>
+                
+                <div id="edit-product" style="display: none;" class="box">
+                    <h1>Add an Ingredient</h1>
+                    <form id="new-ingredient" autocomplete="off">
+                        <input list="ingredient-options" name="name">
+                            <datalist id="ingredient-options">
+                                <!--<option value="Internet Explorer">-->
+                            </datalist>
+                        <input type="submit" value="Add">
+                    </form>
+                </div>
+            
+                <div id="new-user" style="display: none;" class="box">
+                    <form id="new-user-form" autocomplete="off">
+                        <h1>Create New User</h1>
+                        <p> If you're new to Curl Expo, welcome! We're all about finding the right product for your hair type. Don't know your hair type? Take the quiz at <a href='https://www.naturallycurly.com/quiz' target='_blank'>NaturallyCurly</a>. They love your curls as much as we do, and they can help you get started.</p>
+                        <label for="username">Username</label>
+                        <input type="text" name="username">
+                        <label for="email">Email</label>
+                        <input type="text" name="email">
+                        <label for="password">Password</label>
+                        <input type="password" name="password">
+                        <p>Tell us about your hair!</p>
+                        <label for="hair_type">Hair Type</label>
+                        <input type="text" name="hair_type">
+                        <label for="hair_width">Hair Width</label>
+                        <input type="text" name="hair_width">
+                        <label for="hair_porosity">Porosity</label>
+                        <input type="text" name="hair_porosity">
+                        <label for="hair_density">Density</label>
+                        <input type="text" name="hair_density">
+                        <input type="submit" value="Create Account">
+                    </form>
+                </div>
+                <div id="edit-user" style="display: none;" class="box">
+                    <form id="edit-user-form" autocomplete="off">
+                        <h1>Edit Your Profile</h1>
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="e-name">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="e-email">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="e-pass">
+                        <p>Tell us about your hair!</p>
+                        <label for="hair_type">Hair Type</label>
+                        <input type="text" name="hair_type" id="e-type">
+                        <label for="hair_width">Hair Width</label>
+                        <input type="text" name="hair_width" id="e-width">
+                        <label for="hair_porosity">Porosity</label>
+                        <input type="text" name="hair_porosity" id="e-porosity">
+                        <label for="hair_density">Density</label>
+                        <input type="text" name="hair_density" id="e-density">
+                        <input type="submit" value="Edit Profile">
+                    </form>
+                </div>
+                <div id="login" style="display: none;" class="box">
+                    <form id="login-form" autocomplete="off">
+                        <h1>Log In (Returning User)</h1>
+                        <label for="username">Username</label>
+                        <input type="text" name="username">
+                        <label for="email">Email</label>
+                        <input type="text" name="email">
+                        <label for="password">Password</label>
+                        <input type="password" name="password">
+                        <input type="submit" value="Log In">
+                    </form>
+                </div>
+                <div id="logout-div" style="display: none;" class="box">
+                    <h1>Log out of your Account?</h1>
+                    <button id="logout-yes">Yes</button>
+                    <button id="logout-no">NVM</button>
+                </div>
+
+                <div id="fav-container" style="display: none;" class="box">
+                    <h1></h1>
+                    <ul></ul>
+                </div>
+
+                <div id="new-product" style="display: none;" class="box">
+                    <form id="new-product-form" autocomplete="off">
+                        <h1>Add a New Curly Hair Care Product</h1>
+                        <p> Can't find a Product in our System? Add it below!</p>
+                        <label for="name">Product Name</label>
+                        <input type="text" name="name">
+                        <label for="brand">Brand</label>
+                        <input type="text" name="brand">
+                        <label for="image">Image URL (copy/paste the image address)</label>
+                        <input type="text" name="image">
+                        <input type="submit" value="Add Product">
+                    </form>
+                </div>
             </div>
-
-            <div id="login" style="display: none;">
-                <form id="login-form">
-                    <h1>Log In (Returning User)</h1>
-                    <label for="username">Username</label>
-                    <input type="text" name="username">
-                    <label for="email">Email</label>
-                    <input type="text" name="email">
-                    <label for="password">Password</label>
-                    <input type="text" name="password">
-                    <input type="submit" value="Log In">
-                </form>
-            </div>
-        </div>
-        <div id="new-product" style="display: none;">
-            <form id="new-product-form">
-                <h1>Add a New Curly Hair Care Product</h1>
-                <p> Can't find a Product in our System? Add it below!</p>
-                <label for="name">Product Name</label>
-                <input type="text" name="name">
-                <label for="brand">Brand</label>
-                <input type="text" name="brand">
-                <label for="image">Image URL (copy/paste the image address)</label>
-                <input type="text" name="image">
-                <input type="submit" value="Add Product">
-            </form>
-        </div>
-
         </section>
     </main>
     

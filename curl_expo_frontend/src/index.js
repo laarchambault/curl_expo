@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    displayWelcome()
+    displayWelcome()//doesn't seem to work
     logo.addEventListener('click', () => displayWelcome())
     signUpButton.addEventListener('click', () => signUpButtonCallback())
     signUpForm.addEventListener('submit', e => signUpFormCallback(e))
@@ -7,47 +7,61 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', e => loginCallback(e))
     newProductButton.addEventListener('click', () => newProductCallback())
     newProductForm.addEventListener('submit', e => productFormCallback(e))
+    reviewFilterButton.addEventListener('click', () => {dropdownDiv.classList.toggle("show")})
+    reviewFilter.addEventListener('click', (e) => reviewFilterCallback(e))
+    reviewForm.addEventListener('submit', e => reviewFormCallback(e));
+    editButton.addEventListener('click', () => editButtonCallback())
+    newIngredientForm.addEventListener('submit', e => newIngredientCallback(e))
+    favBtn.addEventListener('click', () => favoriteCallback())
+    viewFavBtn.addEventListener('click', () => viewFavBtnCallback())
+    toTryBtn.addEventListener('click', () => toTryCallback())
+    viewToTryBtn.addEventListener('click', () => viewToTryCallback())
+    editProfileBtn.addEventListener('click', () => editProfileCallback())
+    logoutBtn.addEventListener('click', () => logoutCallback())
+    logoutYes.addEventListener('click', () => logoutYesCallback())
+    logoutNo.addEventListener('click', () => logoutNoCallback())
+    editUserForm.addEventListener('submit', e => editProfileFormCallback(e))
     
+
     renderProductsSidebar()
     window.addEventListener('click', e => console.log(e.target))
-    
 
-    //show sidebar and menu options. Default "About" with login/sign up buttons
-    //remove modals, but maybe keep some formatting?
-    //create .js page for each "window"
-    //add event listeners to left menu. If products are clicked, main window shows detail logic.
-    //if login is clicked, clear main window and show login form
-    //if sign up is clicked, clear and show sign up form
-
-
-
-
-
-
+//**************** MEGA REFACTORING
+//Add Ingredients and Ingredient form
 
 })//dom load closure
 ///////////////////////////////////////////////
 //         selectors and global vars
 const baseURL = "http://localhost:3000"
-const mainWindowContainer = document.querySelector('#productDetail')
+const productDetail = document.querySelector('#productDetail')
 const logo = document.querySelector('#logo')
-
-
-
+const landing = document.querySelector('#landing')
+const welcome = document.querySelector('#welcome')
 
 
 ////////////////////////////////////////////////
 //         render methods
 function displayWelcome() {
     clearDetails();
-    mainWindowContainer.appendChild(welcomeText)
+    welcome.style.display = "block"
 }
 
 function clearDetails() {
-    clearChildren(mainWindowContainer)
+    clearProduct()
+    clearReviews()
     clearSignUp()
     clearLogin()
+    clearWelcome()
+    clearLanding()
     clearProductForm()
+    clearEditSection()
+    clearFavorites()
+    clearLogout()
+    clearEditProfile()
+
+    //simplify the clear details function
+    //iterate through divs and set display to none
+    //also remove reviews
 }
 function clearChildren(node) {
     while (node.firstChild) {
@@ -61,9 +75,16 @@ function clearSidebar() {
 
 function clearReviews() {
     clearChildren(allReviews)
-    stageReviewDiv()
 }
-
+function clearProduct() {
+    productDetail.style.display = "none"
+}
+function clearWelcome() {
+    welcome.style.display = "none"
+}
+function clearLanding() {
+    landing.style.display = "none"
+}
 function clearSignUp() {
     signUpDiv.style.display = "none";
 }
@@ -72,8 +93,26 @@ function clearLogin() {
     loginDiv.style.display = "none";
 }
 
+function clearLogout() {
+    logoutDiv.style.display = "none";
+}
+
 function clearProductForm() {
     newProductDiv.style.display = "none";
+}
+
+function clearEditProfile() {
+    editUserDiv.style.display = "none";
+}
+
+function clearEditSection() {
+    clearChildren(ingredientDatalist)
+    editDiv.style.display = "none"
+}
+
+function clearFavorites() {
+    clearChildren(favDiv.querySelector('ul'))
+    favDiv.style.display = "none"
 }
 
 function renderSignUp() {
@@ -83,16 +122,26 @@ function renderSignUp() {
 function renderLogin() {
     loginDiv.style.display = "block";
 }
-
+function renderWelcome() {
+    welcome.style.display = "block"
+}
+function renderLanding() {
+    landing.style.display = "block"
+}
 function renderProductForm() {
     newProductDiv.style.display = "block"
+}
+
+function renderEditSection() {
+    editDiv.style.display = "block";
+    loadDatalistIngredients()
 }
 
 
 function greetUser() {
     document.querySelector('#greeting').textContent = `Welcome ${currentUser.username}`
     clearDetails();
-    mainWindowContainer.appendChild(landing)
+    renderLanding();
 }
 
 

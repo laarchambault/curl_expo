@@ -1,16 +1,15 @@
 ////////////////////////////////////////////////
 //       selectors
 const productSidebar = document.querySelector('#products-container')
+const reviewFilterButton = document.querySelector('#reviews button')
+const dropdownDiv = document.querySelector('#myDropdown')
+const reviewFilter = document.querySelector('#reviews div.dropdown')
+const productFacts = document.querySelector('#product-facts')
+const reviewForm = document.querySelector('#score-form')
+const allReviews = document.querySelector('#review-container')
+const plsSignIn = document.querySelector('#pls-sign-in')
+const avgScoreSpan = document.querySelector('#avg-score-disp')
 
-let allReviews = document.createElement('div');
-
-function stageReviewDiv() {
-    allReviews.id = 'reviews';
-    let header = document.createElement('h1')
-    header.textContent = "Product Reviews"
-    allReviews.append(header, reviewFilter)
-    reviewFilter.addEventListener('click', (e) => reviewFilterCallback(e))
-}
 ////////////////////////////////////////////////
 //      products
 
@@ -27,62 +26,49 @@ function createProductLi(product) {
     li.textContent = product.name
     li.className = "item"
     li.dataset.id = product.id
-    li.addEventListener('click', e => displayProductDetails(e.target))
+    li.addEventListener('click', e => displayProductDetails(e.target.dataset.id))
     productSidebar.append(li)
-    return li
+    return li.dataset.id
 }
 
-function displayProductDetails(li) {
-    let id = li.dataset.id
+function displayProductDetails(id) {
     clearDetails()
-    clearReviews()
+    newIngredientForm.dataset.id = id
+    productDetail.dataset.id = id
+    productDetail.style.display = "block"
     productFetch(id)
     .then(productData => {
-        produceDetailElements(productData)
+        fillDetailElements(productData)
         if (currentUser.username) {
-            produceReviewFormElements(productData)
+            reviewForm.style.display = "block"
+            plsSignIn.style.display = "none"
+            reviewForm.dataset.id = productData.id
         } else {
-            let h = document.createElement('h1')
-            h.textContent = "Sign in to leave a review"
-            mainWindowContainer.append(h)
+            reviewForm.style.display = "none"
+            plsSignIn.style.display = "block"
         }
         loadAllReviews(productData.id.toString())
     })
 }
 
-function produceDetailElements(productData) {
-    let image = document.createElement('img');
-    image.src = productData.image;
-    image.alt = productData.name;
-    let header = document.createElement('h1');
-    header.textContent = productData.name;
-    let p = document.createElement('p')
-    p.className = "description"
-    p.textContent = `Product Company: ${productData.brand}`
-    mainWindowContainer.append(image, header, p)
+function fillDetailElements(productData) {
+    productFacts.querySelector('img').src = productData.image || "";
+    productFacts.querySelector('img').alt = productData.name || "";
+    productFacts.querySelector('h1').textContent = productData.name || "";
+    productFacts.querySelector('p').textContent = `Product Company: ${productData.brand}`
+    let ingList = productData.ingredients
+    
+    if (ingList.length) {
+        let ingNames = ingList.map(ing => ing.name)
+        let ingredientStr = ingNames.reduce((acc, name) => {
+            return acc + `, ${name}`
+        })
+    productFacts.querySelector('p#ingred').textContent  = ingredientStr
+    } else {
+        productFacts.querySelector('p#ingred').textContent = ""
+    }
 }
 
-function produceReviewFormElements(productData) {
-    let header = document.createElement('h1')
-    header.textContent = "Review This Product"
-    let form = document.createElement('form')
-    form.id = "score-form"
-    form.dataset.id = productData.id
-    let score = document.createElement('input')
-    score.type = "number"
-    score.name = "score"
-    score.min = "0"
-    score.max = "10"
-    score.step = "0"
-    let content = document.createElement('textarea')
-    content.name = "content"
-    let formSubmit = document.createElement('input');
-    formSubmit.type = 'submit';
-    formSubmit.value = "Submit Review";
-    form.append(score, content, formSubmit);
-    form.addEventListener('submit', e => reviewFormCallback(e));
-    mainWindowContainer.append(header, form)
-}
 
 ///////////////////////////////////////////////
 //         reviews
@@ -92,11 +78,11 @@ function loadAllReviews(productId) {
     productFetch(productId)
     .then( productData => {
         clearReviews();
-        mainWindowContainer.append(allReviews)
         productData.reviews.forEach(review => {
-            addReview(productData, review)
-        }
-    )}
+            addReview(review)
+        })
+        displayedReviewScoreAvg()
+    }
 )}
 
 function reviewFilterCallback(e) {
@@ -105,7 +91,6 @@ function reviewFilterCallback(e) {
         if (currentReviews.length > 0) {
             if (e.target.innerText === 'All') {
                 currentReviews.forEach( review => {
-                    //if "All" all display: block
                     review.style.display = "block"
                 })
             } else {
@@ -118,9 +103,7 @@ function reviewFilterCallback(e) {
                 })
             }
         }
-
-        //else if dataset.hair_type === p.value, display: block
-        //else display: none
+        displayedReviewScoreAvg()
     }
 }
 // Close the dropdown if the user clicks outside of it
@@ -137,10 +120,11 @@ window.onclick = function(event) {
         }
     }
 
-function addReview(productData, review) {
+function addReview(review) {
     let ul = document.createElement('ul')
-    let user = productData.users.find( user => (user.id === review.user_id))
+    let user = review.user
     ul.dataset.userHairType = user.hair_type
+    ul.dataset.score = review.score
     let header = document.createElement('h3')
     header.textContent = `${user.username} (${user.hair_type}) says:`
     let score = document.createElement('li')
@@ -154,6 +138,7 @@ function addReview(productData, review) {
 function addNewReview(user, review) {
     let ul = document.createElement('ul')
     ul.dataset.userHairType = user.hair_type
+    ul.dataset.score = review.score
     let header = document.createElement('h3')
     header.textContent = `${user.username} (${user.hair_type}) says:`
     let score = document.createElement('li')
@@ -164,6 +149,23 @@ function addNewReview(user, review) {
     allReviews.append(ul)
 }
 
+function displayedReviewScoreAvg() {
+    let reviews = [].slice.call(allReviews.querySelectorAll("ul"));
+    let dispReviews = reviews.filter(rev => rev.style.display !== "none")
+    if (dispReviews.length) {
+        let scores = []
+        dispReviews.forEach(review => {
+            scores.push(review.dataset.score)
+        })
+        let intScores = scores.map(score => Number.parseInt(score, 10) )
+        let total = intScores.reduce( (acc, cur) => acc + cur)
+        avgScoreSpan.textContent = (total/(intScores.length)).toFixed(1)
+    } else {
+        avgScoreSpan.textContent = ""
+    }
+
+}
+
 function reviewFormCallback(e) {
     e.preventDefault()
     let t = e.target
@@ -172,6 +174,7 @@ function reviewFormCallback(e) {
     fetchNewReview(reviewObj)
     .then(review => {
         addNewReview(review.user, review)
+        displayedReviewScoreAvg()
     })
 }
 
