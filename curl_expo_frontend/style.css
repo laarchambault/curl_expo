@@ -81,6 +81,8 @@ aside .item {
     border: 1px solid transparent;
     transition: background-color .3s ease;
     line-height: 1.5rem;
+    text-decoration: none;
+    color: black;
 }
 
 aside .item.button {

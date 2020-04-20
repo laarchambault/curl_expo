@@ -88,8 +88,7 @@ function favoriteCallback() {
     })
     .then(r => r.json())
     .then(favorite => {
-        console.log(favorite)
-        console.log("favorite added. Style coming soon")
+        alert("Saved!")
     })//.then change styling on button
 }
 
@@ -110,7 +109,6 @@ function toTryCallback() {
     })
     .then(r => r.json())
     .then(favorite => {
-        console.log(favorite)
-        console.log("favorite added. Style coming soon")
+        alert("Saved!")
     })//.then change styling on button
 }

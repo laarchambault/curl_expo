@@ -27,7 +27,10 @@ function createProductLi(product) {
     li.className = "item"
     li.dataset.id = product.id
     li.addEventListener('click', e => displayProductDetails(e.target.dataset.id))
-    productSidebar.append(li)
+    let a = document.createElement('a')
+    a.href = "#top"
+    a.append(li)
+    productSidebar.append(a)
     return li.dataset.id
 }
 
